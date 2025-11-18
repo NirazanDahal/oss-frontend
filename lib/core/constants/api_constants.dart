@@ -3,4 +3,8 @@ class ApiConstants {
   //auth
   static const String register = '/auth/register';
   static const String login = '/auth/login';
+  static const String profile='/auth/profile';
+
+  //customer
+  static const String customer='/customer';
 }

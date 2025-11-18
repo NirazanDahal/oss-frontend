@@ -1,6 +1,12 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:oss_frontend/features/auth/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/auth/services/auth_service.dart';
+import 'package:oss_frontend/features/auth/usecases/profile_usecase.dart';
+import 'package:oss_frontend/features/customer/bloc/customer/customer_bloc.dart';
+import 'package:oss_frontend/features/customer/repositories/remote/customer_remote_repository.dart';
+import 'package:oss_frontend/features/customer/usecases/create_customer_usecase.dart';
+import 'package:oss_frontend/features/customer/usecases/get_customer_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:oss_frontend/core/constants/api_constants.dart';
@@ -45,10 +51,17 @@ Future<void> setupLocator() async {
 
   // Repository
   locator.registerLazySingleton<AuthRepository>(() => AuthRepository(locator<Dio>()));
+locator.registerLazySingleton<CustomerRepository>(() => CustomerRepository(locator<Dio>()));
+
 
   // Use cases
   locator.registerFactory<RegisterUseCase>(() => RegisterUseCase(locator<AuthRepository>()));
   locator.registerFactory<LoginUseCase>(() => LoginUseCase(locator<AuthRepository>()));
+  locator.registerFactory<GetProfileUseCase>(() => GetProfileUseCase(locator<AuthRepository>()));
+locator.registerFactory<CreateCustomerUseCase>(() => CreateCustomerUseCase(locator<CustomerRepository>()));
+locator.registerFactory<GetCustomersUseCase>(() => GetCustomersUseCase(locator<CustomerRepository>()));
+
+
 
   // Blocs
   locator.registerFactory<RegisterBloc>(() => RegisterBloc(locator<RegisterUseCase>()));
@@ -58,4 +71,10 @@ Future<void> setupLocator() async {
       authService: locator<AuthService>(),
     ),
   );
+  locator.registerFactory<ProfileBloc>(() => ProfileBloc(locator<GetProfileUseCase>()));
+  locator.registerFactory<CustomerBloc>(() => CustomerBloc(
+  locator<CreateCustomerUseCase>(),
+  locator<GetCustomersUseCase>(),
+));
 }
+

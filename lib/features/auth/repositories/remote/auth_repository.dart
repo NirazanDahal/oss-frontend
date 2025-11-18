@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:oss_frontend/core/constants/api_constants.dart';
 import 'package:oss_frontend/features/auth/models/res/login_response.dart';
+import 'package:oss_frontend/features/auth/models/res/profile_response.dart';
 import 'package:oss_frontend/features/auth/models/res/register_response.dart';
 
 class AuthRepository {
@@ -52,6 +53,19 @@ class AuthRepository {
       return LoginResponse.fromJson(e.response!.data as Map<String, dynamic>);
     }
     throw Exception(e.message ?? 'Network error');
+  }
+}
+
+
+Future<ProfileResponse> getProfile() async {
+  try {
+    final response = await _dio.get(ApiConstants.profile); 
+    return ProfileResponse.fromJson(response.data);
+  } on DioException catch (e) {
+    if (e.response?.data != null) {
+      return ProfileResponse.fromJson(e.response!.data as Map<String, dynamic>);
+    }
+    rethrow;
   }
 }
 }

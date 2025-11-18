@@ -1,0 +1,36 @@
+import 'package:oss_frontend/features/customer/models/req/customer_request_model.dart';
+
+class CustomerResponse {
+  final bool success;
+  final List<Customer> data;
+  final int page;
+  final int limit;
+  final int total;
+  final int totalPages;
+  final int count;
+  final String? error;
+
+  CustomerResponse({
+    required this.success,
+    required this.data,
+    required this.page,
+    required this.limit,
+    required this.total,
+    required this.totalPages,
+    required this.count,
+    this.error,
+  });
+
+  factory CustomerResponse.fromJson(Map<String, dynamic> json) {
+    return CustomerResponse(
+      success: json['success'] as bool,
+      data: (json['data'] as List).map((e) => Customer.fromJson(e)).toList(),
+      page: json['page'] as int,
+      limit: json['limit'] as int,
+      total: json['total'] as int,
+      totalPages: json['totalPages'] as int,
+      count: json['count'] as int,
+      error: json['error'] as String?,
+    );
+  }
+}
