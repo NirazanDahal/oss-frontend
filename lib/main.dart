@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:oss_frontend/core/constants/app_colors.dart';
-import 'package:oss_frontend/features/auth/pages/login_page.dart';
-import 'package:oss_frontend/features/auth/pages/register_page.dart';
-import 'package:oss_frontend/features/auth/services/auth_service.dart';
-import 'package:oss_frontend/features/dashboard/page/dashboard_page.dart';
-import 'core/di/injection.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oss_frontend/core/di/injection.dart';
+import 'package:oss_frontend/core/routes/app_routes.dart';
+import 'package:oss_frontend/core/utils/snack_utils.dart';
+import 'package:oss_frontend/features/auth/repositories/auth_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
+  await setupDependencies();
   runApp(const MyApp());
 }
 
@@ -17,23 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authService = locator<AuthService>();
-
-    return MaterialApp(
-      title: 'Admin Panel',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        useMaterial3: true,
-        scaffoldBackgroundColor: AppColors.background,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthBloc(getIt<AuthRepository>())),
+      ],
+      child: MaterialApp(
+        scaffoldMessengerKey: SnackUtils.messengerKey,
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.splashScreen,
+        routes: AppRoutes.getRoutes(),
       ),
-      home: authService.isLoggedIn ? const DashboardPage() : const LoginPage(),
-      routes: {
-        '/login': (_) => const LoginPage(),
-        '/register': (_) => const RegisterPage(),
-        '/dashboard': (_) => const DashboardPage(),
-      },
     );
   }
 }
-
