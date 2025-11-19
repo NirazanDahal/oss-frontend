@@ -3,32 +3,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/core/utils/snack_utils.dart';
+import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
+import 'package:oss_frontend/features/auth/blocs/login/login_event.dart';
+import 'package:oss_frontend/features/auth/blocs/login/login_state.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_event.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_state.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final TextEditingController _nameController = TextEditingController();
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocConsumer<RegisterBloc, RegisterState>(
+      body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state is RegisterSuccessState) {
-            Navigator.pop(context);
-            SnackUtils.showSuccess(ResponseConstants.registerSuccessMessage);
+          if (state is LoginSuccessState) {
+            SnackUtils.showSuccess(ResponseConstants.loginSuccessMessage);
           }
-          if (state is RegisterFailureState) {
+          if (state is LoginFailureState) {
             SnackUtils.showError(state.error.error);
           }
         },
@@ -36,10 +37,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           return Center(
             child: Column(
               children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: InputDecoration(labelText: 'Name'),
-                ),
                 SizedBox(height: 5),
                 TextFormField(
                   controller: _emailController,
@@ -53,15 +50,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: () {
-                    context.read<RegisterBloc>().add(
-                      RegisterSubmittedEvent(
-                        _nameController.text.trim(),
+                    context.read<LoginBloc>().add(
+                      LoginSubmittedEvent(
                         _emailController.text.trim(),
                         _passwordController.text.trim(),
                       ),
                     );
                   },
-                  child: Text('Register'),
+                  child: Text('Login'),
+                ),
+                SizedBox(height: 5),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.registerScreen);
+                  },
+                  child: Text("Don't have and account? Register here"),
                 ),
               ],
             ),

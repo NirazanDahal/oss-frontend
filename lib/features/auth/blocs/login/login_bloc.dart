@@ -2,31 +2,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/utils/error_response_model.dart';
 import 'package:oss_frontend/core/utils/exception_utils.dart';
-import 'package:oss_frontend/features/auth/blocs/register/register_event.dart';
-import 'package:oss_frontend/features/auth/blocs/register/register_state.dart';
+import 'package:oss_frontend/features/auth/blocs/login/login_event.dart';
+import 'package:oss_frontend/features/auth/blocs/login/login_state.dart';
 import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repository.dart';
 
-class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRemoteRepository _authRemoteRepository;
-
-  RegisterBloc(this._authRemoteRepository) : super(RegisterInitialState()) {
-    on<RegisterSubmittedEvent>((event, emit) async {
-      emit(RegisterLoadingState());
+  LoginBloc(this._authRemoteRepository) : super(LoginInitialState()) {
+    on<LoginSubmittedEvent>((event, emit) async {
+      emit(LoginLoadingState());
       try {
-        final response = await _authRemoteRepository.register(
-          event.name,
+        final response = await _authRemoteRepository.login(
           event.email,
           event.password,
         );
-        emit(RegisterSuccessState(response));
+        emit(LoginSuccessState(response));
       } on CreateException catch (e) {
-        emit(RegisterFailureState(e.error));
+        emit(LoginFailureState(e.error));
       } catch (e) {
         emit(
-          RegisterFailureState(
+          LoginFailureState(
             ErrorResponseModel(
               success: false,
-              error: ResponseConstants.registerFailureMessage,
+              error: ResponseConstants.loginFailureMessage,
             ),
           ),
         );

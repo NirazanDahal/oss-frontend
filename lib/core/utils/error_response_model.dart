@@ -1,11 +1,11 @@
-class CreateErrorResponse {
+class ErrorResponseModel {
   final bool success;
   final String error;
 
-  CreateErrorResponse({required this.success, required this.error});
+  ErrorResponseModel({required this.success, required this.error});
 
-  factory CreateErrorResponse.fromJson(Map<String, dynamic> json) {
-    return CreateErrorResponse(
+  factory ErrorResponseModel.fromJson(Map<String, dynamic> json) {
+    return ErrorResponseModel(
       success: json['success'] ?? false,
       error: json['error'] ?? '',
     );

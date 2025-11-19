@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:oss_frontend/features/auth/views/screens/login_screen.dart';
 import 'package:oss_frontend/features/auth/views/screens/register_screen.dart';
+import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
 
 class AppRoutes {
   static const String registerScreen = '/register';
   static const String loginScreen = '/login';
-  static const String createAdminScreen = '/createAdmin';
-  static const String createBuyerScreen = '/createBuyer';
-  static const String dashboardScreen = '/dashboard';
-  static const String splashScreen = '/splash';
-  // static const String
+  static const String profileScreen = '/profile';
 
   static Map<String, WidgetBuilder> getRoutes() {
-    return {registerScreen: (context) => const RegisterScreen()};
+    return {
+      registerScreen: (context) => const RegisterScreen(),
+      loginScreen: (context) => const LoginScreen(),
+      profileScreen: (context) => const ProfileScreen(),
+    };
   }
 }

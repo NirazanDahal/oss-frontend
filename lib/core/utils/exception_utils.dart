@@ -1,7 +1,7 @@
 import 'package:oss_frontend/core/utils/error_response_model.dart';
 
 class CreateException implements Exception {
-  final CreateErrorResponse error;
+  final ErrorResponseModel error;
 
   CreateException(this.error);
 

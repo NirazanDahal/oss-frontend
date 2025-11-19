@@ -11,7 +11,7 @@ class LocalStorageService {
     await _preferences.setString(key, value);
   }
 
-  String? getString(String key) {
+  String getString(String key) {
     return _preferences.getString(key) ?? "";
   }
 }

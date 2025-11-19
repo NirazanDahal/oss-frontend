@@ -1,26 +1,26 @@
 class RegisterResponseModel {
   final bool success;
-  final Data data;
+  final User user;
 
-  RegisterResponseModel({required this.success, required this.data});
+  RegisterResponseModel({required this.success, required this.user});
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterResponseModel(
       success: json['success'] ?? false,
-      data: json['data'],
+      user: User.fromJson(json['user']),
     );
   }
 }
 
-class Data {
+class User {
   final String id;
   final String name;
   final String email;
 
-  Data({required this.id, required this.name, required this.email});
+  User({required this.id, required this.name, required this.email});
 
-  factory Data.fromJson(Map<String, dynamic> json) {
-    return Data(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'] ?? 'N/A',
       name: json['name'] ?? 'N/A',
       email: json['email'] ?? 'N/A',
