@@ -85,12 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                             Navigator.pushNamedAndRemoveUntil(
                               context,
-                              AppRoutes.profileScreen,
+                              AppRoutes.dashBoardScreen,
                               (r) => false,
                             );
                           }
-                          if (state is LoginFailureState)
+                          if (state is LoginFailureState) {
                             SnackUtils.showError(state.error.error);
+                          }
                         },
                         builder: (context, state) {
                           return PrimaryButton(

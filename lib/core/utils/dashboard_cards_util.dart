@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:oss_frontend/core/constants/app_colors.dart';
 import 'package:oss_frontend/core/routes/app_routes.dart';
 
 class DashboardCardsUtil {
-  static const List<Map<String, dynamic>> dashboardItems = [
+  static final List<Map<String, dynamic>> dashboardItems = [
     {
-      'name': 'Customer',
-      'color': Colors.blue,
-      'icon': Icons.person,
+      'name': 'Customers',
+      'icon': Icons.people_outline,
+      'color': AppColors.cardBlue,
       'route': AppRoutes.getCustomerScreen,
     },
     {
-      'name': 'Product',
-      'color': Colors.yellow,
-      'icon': Icons.shopping_bag,
-      // 'route': AppRoutes.
+      'name': 'Products',
+      'icon': Icons.inventory_2_outlined,
+      'color': AppColors.cardGreen,
+      // 'route': AppRoutes.productScreen,
     },
     {
-      'name': 'Purchase',
-      'color': Colors.green,
-      'icon': Icons.shopping_cart,
-      // 'route': AppRoutes.customerScreen,
+      'name': 'Purchases',
+      'icon': Icons.shopping_cart_outlined,
+      'color': AppColors.cardOrange,
+      // 'route': AppRoutes.purchaseScreen,
     },
     {
       'name': 'Sales',
-      'color': Colors.purple,
-      'icon': Icons.sell,
-      // 'route': AppRoutes.customerScreen,
+      'icon': Icons.trending_up,
+      'color': AppColors.cardPurple,
+      // 'route': AppRoutes.salesScreen,
+    },
+    {
+      'name': 'Reports',
+      'icon': Icons.bar_chart,
+      'color': AppColors.cardTeal,
+      // 'route': AppRoutes.reportsScreen,
+    },
+    {
+      'name': 'Settings',
+      'icon': Icons.settings_outlined,
+      'color': AppColors.cardRed,
+      // 'route': AppRoutes.settingsScreen,
     },
   ];
 }

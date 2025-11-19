@@ -9,4 +9,12 @@ class AppColors {
   static const border = Color(0xFFE0E0E0);
   static const success = Color(0xFF10B981);
   static const successBg = Color(0xFFECFDF5);
+
+  // Dashboard Card Colors (Soft & Professional)
+  static const cardBlue = Color(0xFF3B82F6);
+  static const cardGreen = Color(0xFF10B981);
+  static const cardPurple = Color(0xFF8B5CF6);
+  static const cardOrange = Color(0xFFF59E0B);
+  static const cardRed = Color(0xEF4444);
+  static const cardTeal = Color(0xFF14B8A6);
 }

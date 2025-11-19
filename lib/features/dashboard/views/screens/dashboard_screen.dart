@@ -1,63 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:oss_frontend/core/constants/app_colors.dart';
 import 'package:oss_frontend/core/utils/dashboard_cards_util.dart';
+import 'package:oss_frontend/features/dashboard/views/widgets/dashboard_card.dart';
 
-class DashboardScreen extends StatefulWidget {
+class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
   @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard'), centerTitle: true),
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text("Dashboard"),
+        centerTitle: true,
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 0,
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isMobile = constraints.maxWidth < 600;
+          final crossAxisCount = isMobile
+              ? 2
+              : (constraints.maxWidth > 1200 ? 6 : 4);
 
           return GridView.builder(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(20),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: isMobile ? 2 : 4,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              childAspectRatio: isMobile ? 1 : 1.2,
+              crossAxisCount: crossAxisCount,
+              mainAxisSpacing: 20,
+              crossAxisSpacing: 20,
+              childAspectRatio: isMobile ? 1.1 : 1.3,
             ),
             itemCount: DashboardCardsUtil.dashboardItems.length,
             itemBuilder: (context, index) {
               final item = DashboardCardsUtil.dashboardItems[index];
-
-              return GestureDetector(
+              return DashboardCard(
+                title: item['name'],
+                icon: item['icon'],
+                color: item['color'],
                 onTap: () {
-                  Navigator.pushNamed(context, item['route']);
+                  final route = item['route'] as String?;
+                  if (route != null && route.isNotEmpty) {
+                    Navigator.pushNamed(context, route);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("${item['name']} - Coming Soon")),
+                    );
+                  }
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: item['color'],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        item['icon'],
-                        size: isMobile ? 36 : 48, // Responsive icon size
-                        color: Colors.white,
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        item['name'],
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: isMobile ? 16 : 20, // Responsive font
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               );
             },
           );
