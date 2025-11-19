@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:oss_frontend/features/auth/repositories/auth_repository.dart';
+import 'package:oss_frontend/features/auth/repositories/local/auth_local_repositoty.dart';
+import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repository.dart';
 import 'package:oss_frontend/features/auth/services/auth_api_service.dart';
 import '../utils/local_storage_service.dart';
 
@@ -18,7 +19,8 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<AuthApiService>(() => AuthApiService());
 
   //Repository
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepository(getIt<AuthApiService>(), getIt<LocalStorageService>()),
+  getIt.registerLazySingleton<AuthLocalRepositoty>(()=>AuthLocalRepositoty(getIt<LocalStorageService>()));
+  getIt.registerLazySingleton<AuthRemoteRepository>(
+    () => AuthRemoteRepository(getIt<AuthApiService>(), getIt<AuthLocalRepositoty>()),
   );
 }

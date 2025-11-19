@@ -2,17 +2,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   late SharedPreferences _preferences;
-  static const String tokenKey = 'token';
 
   Future<void> init() async {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  Future<void> setToken(String token) async {
-    await _preferences.setString(tokenKey, token);
+  Future<void> setString(String key, String value) async {
+    await _preferences.setString(key, value);
   }
 
-  String? getToken() {
-    return _preferences.getString(tokenKey) ?? "";
+  String? getString(String key) {
+    return _preferences.getString(key) ?? "";
   }
 }
