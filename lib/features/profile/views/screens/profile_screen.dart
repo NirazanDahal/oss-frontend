@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.addCustomerScreen);
+              Navigator.pushNamed(context, AppRoutes.customerScreen);
             },
             icon: Icon(Icons.person_add),
           ),
@@ -36,15 +36,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
-          if (state is GetProfileLoadingState) {
-            SnackUtils.showInfo(ResponseConstants.getProfileLoadingMessage);
-          }
-          if (state is GetProfileSuccessState) {
-            SnackUtils.showSuccess(ResponseConstants.getProfileSuccessMessage);
-          }
-          if (state is GetProfileFailureState) {
-            SnackUtils.showError(state.error.error);
-          }
+          // if (state is GetProfileLoadingState) {
+          //   SnackUtils.showInfo(ResponseConstants.getProfileLoadingMessage);
+          // }
+          // if (state is GetProfileSuccessState) {
+          //   SnackUtils.showSuccess(ResponseConstants.getProfileSuccessMessage);
+          // }
+          // if (state is GetProfileFailureState) {
+          //   SnackUtils.showError(state.error.error);
+          // }
         },
         builder: (context, state) {
           if (state is GetProfileSuccessState) {

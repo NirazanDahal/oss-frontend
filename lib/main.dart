@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         scaffoldMessengerKey: SnackUtils.messengerKey,
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.loginScreen,
+        initialRoute: AppRoutes.dashBoardScreen,
         routes: AppRoutes.getRoutes(),
       ),
     );
