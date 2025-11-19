@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/core/utils/dashboard_cards_util.dart';
 
 class DashboardScreen extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/routes/app_routes.dart';
-import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_event.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_state.dart';
