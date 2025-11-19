@@ -17,10 +17,17 @@ class ResponseConstants {
   static const String getProfileLoadingMessage =
       'Profile is loading, please wait...';
   static const String getProfileSuccessMessage = 'Profile loaded successfully';
-  //Customer
+  //Add Customer
   static const String addCustomerFailureMessage =
       'Cannot create customer at this time, try again later...';
   static const String addCustomerLoadingMessage =
       'Customer is being added, please wait...';
   static const String addCustomerSuccessMessage = 'Customer added successfully';
+  //Get Customer
+  static const String getCustomerFailureMessage =
+      'Cannot load customers at this time, try again later...';
+  static const String getCustomerLoadingMessage =
+      'Customers are loading, please wait...';
+  static const String getCustomerSuccessMessage =
+      'Customers laoded successfully';
 }

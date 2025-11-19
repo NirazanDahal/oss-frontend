@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.customerScreen);
+              Navigator.pushNamed(context, AppRoutes.getCustomerScreen);
             },
             icon: Icon(Icons.person_add),
           ),

@@ -7,7 +7,7 @@ class DashboardCardsUtil {
       'name': 'Customer',
       'color': Colors.blue,
       'icon': Icons.person,
-      'route': AppRoutes.customerScreen,
+      'route': AppRoutes.getCustomerScreen,
     },
     {
       'name': 'Product',

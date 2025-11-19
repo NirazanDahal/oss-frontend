@@ -6,8 +6,10 @@ import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
 import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repository.dart';
-import 'package:oss_frontend/features/costomer/blocs/bloc/add_customer_bloc.dart';
+import 'package:oss_frontend/features/costomer/blocs/add_customer/add_customer_bloc.dart';
+import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/repositories/add_customer_remote_repository.dart';
+import 'package:oss_frontend/features/costomer/repositories/get_customer_remote_repository.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
@@ -37,11 +39,15 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               AddCustomerBloc(getIt<AddCustomerRemoteRepository>()),
         ),
+        BlocProvider(
+          create: (context) =>
+              GetCustomerBloc(getIt<GetCustomerRemoteRepository>()),
+        ),
       ],
       child: MaterialApp(
         scaffoldMessengerKey: SnackUtils.messengerKey,
         debugShowCheckedModeBanner: false,
-        initialRoute: AppRoutes.dashBoardScreen,
+        initialRoute: AppRoutes.getCustomerScreen,
         routes: AppRoutes.getRoutes(),
       ),
     );
