@@ -6,3 +6,5 @@ class AddCustomerSubmittedEvent extends AddCustomerEvent {
   final String address;
   AddCustomerSubmittedEvent(this.name, this.phone, this.address);
 }
+
+class ResetAddCustomerStateEvent extends AddCustomerEvent {}

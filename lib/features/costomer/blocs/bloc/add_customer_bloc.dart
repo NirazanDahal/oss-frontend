@@ -32,5 +32,9 @@ class AddCustomerBloc extends Bloc<AddCustomerEvent, AddCustomerState> {
         );
       }
     });
+
+    on<ResetAddCustomerStateEvent>((event, emit) {
+      emit(AddCustomerInitialState());
+    });
   }
 }
