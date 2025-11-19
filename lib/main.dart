@@ -6,6 +6,10 @@ import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
 import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repository.dart';
+import 'package:oss_frontend/features/costomer/blocs/bloc/add_customer_bloc.dart';
+import 'package:oss_frontend/features/costomer/repositories/add_customer_remote_repository.dart';
+import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
+import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +29,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LoginBloc(getIt<AuthRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (context) => ProfileBloc(getIt<ProfileRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              AddCustomerBloc(getIt<AddCustomerRemoteRepository>()),
         ),
       ],
       child: MaterialApp(

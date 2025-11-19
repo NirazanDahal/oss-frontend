@@ -1,12 +1,26 @@
 class ResponseConstants {
-  static const String registerSuccessMessage = 'Regiatration successful';
+  //Register
   static const String registerFailureMessage =
       'Registration failure, try again later...';
-  static const String loginSuccessMessage = 'Login successful';
+  static const String registerLoadingMessage =
+      'User is being registered, please wait...';
+  static const String registerSuccessMessage = 'Regiatration successful';
+  //Login
   static const String loginFailureMessage =
       'Cannot login at this time, try again later...';
+  static const String loginLoadingMessage =
+      'User is being logged in, please wait...';
+  static const String loginSuccessMessage = 'Login successful';
+  //Profile
   static const String getProfileFailureMessage =
       'Cannot fetch profile at this time, try again later...';
-  static const String getProfileLoadingMessage = 'Profile is loading...';
+  static const String getProfileLoadingMessage =
+      'Profile is loading, please wait...';
   static const String getProfileSuccessMessage = 'Profile loaded successfully';
+  //Customer
+  static const String addCustomerFailureMessage =
+      'Cannot create customer at this time, try again later...';
+  static const String addCustomerLoadingMessage =
+      'Customer is being added, please wait...';
+  static const String addCustomerSuccessMessage = 'Customer added successfully';
 }

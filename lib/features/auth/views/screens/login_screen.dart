@@ -6,9 +6,6 @@ import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_event.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_state.dart';
-import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
-import 'package:oss_frontend/features/auth/blocs/register/register_event.dart';
-import 'package:oss_frontend/features/auth/blocs/register/register_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,6 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is LoginSuccessState) {
             SnackUtils.showSuccess(ResponseConstants.loginSuccessMessage);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.profileScreen,
+              (route) => false,
+            );
           }
           if (state is LoginFailureState) {
             SnackUtils.showError(state.error.error);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/response_constants.dart';
+import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_event.dart';
@@ -23,7 +24,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.addCustomerScreen);
+            },
+            icon: Icon(Icons.person_add),
+          ),
+        ],
+      ),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is GetProfileLoadingState) {
@@ -33,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SnackUtils.showSuccess(ResponseConstants.getProfileSuccessMessage);
           }
           if (state is GetProfileFailureState) {
-            SnackUtils.showError(ResponseConstants.getProfileFailureMessage);
+            SnackUtils.showError(state.error.error);
           }
         },
         builder: (context, state) {
@@ -45,7 +55,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(state.profileResponse.userProfile.name),
                   Text(state.profileResponse.userProfile.email),
                   Text(state.profileResponse.userProfile.role),
-                  Text(state.profileResponse.userProfile.createdAt.toString()),
+                  Text(
+                    '${state.profileResponse.userProfile.createdAt.year.toString()}/${state.profileResponse.userProfile.createdAt.month.toString()}/${state.profileResponse.userProfile.createdAt.day.toString()}',
+                  ),
                   Text(state.profileResponse.userProfile.updatedAt.toString()),
                 ],
               ),

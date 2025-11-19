@@ -4,10 +4,10 @@ import 'package:oss_frontend/core/utils/error_response_model.dart';
 import 'package:oss_frontend/core/utils/exception_utils.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_event.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_state.dart';
-import 'package:oss_frontend/features/profile/repositories/profile_repository.dart';
+import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  final ProfileRepository _profileRepository;
+  final ProfileRemoteRepository _profileRepository;
   ProfileBloc(this._profileRepository) : super(GetProfileInitialState()) {
     on<GetProfileSubmittedEvent>((event, emit) async {
       emit(GetProfileLoadingState());
