@@ -131,6 +131,7 @@ class _UpdateCustomerWidgetState extends State<UpdateCustomerWidget> {
                                       widget.customer.address.trim()) {
                                 context.read<UpdateCustomerBloc>().add(
                                   UpdateCustomerSubmittedEvent(
+                                    widget.customer.id,
                                     _nameController.text.trim(),
                                     _phoneController.text.trim(),
                                     _addressController.text.trim(),

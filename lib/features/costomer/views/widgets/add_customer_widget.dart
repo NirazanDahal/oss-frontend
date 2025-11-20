@@ -32,58 +32,59 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text(
+          "Add New Customer",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: AppColors.text,
+          ),
+        ),
+      ),
       body: Container(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(height: 20),
-
-            // Title
-            const Text(
-              "Add New Customer",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: AppColors.text,
-              ),
-            ),
-            const SizedBox(height: 32),
             Expanded(
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    CustomerTextField(
-                      controller: _nameController,
-                      label: "Full Name",
-                      icon: Icons.person_outline,
-                      textCapitalization: TextCapitalization.words,
-                      // validator: (v) =>
-                      //     v?.trim().isEmpty == true ? "Name is required" : null,
-                    ),
-                    const SizedBox(height: 16),
+              child: Center(
+                child: Form(
+                  key: _formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      CustomerTextField(
+                        controller: _nameController,
+                        label: "Full Name",
+                        icon: Icons.person_outline,
+                        textCapitalization: TextCapitalization.words,
+                        // validator: (v) =>
+                        //     v?.trim().isEmpty == true ? "Name is required" : null,
+                      ),
+                      const SizedBox(height: 16),
 
-                    CustomerTextField(
-                      controller: _phoneController,
-                      label: "Phone Number",
-                      icon: Icons.phone_outlined,
-                      keyboardType: TextInputType.phone,
-                      // validator: (v) => v?.trim().isEmpty == true
-                      //     ? "Phone is required"
-                      //     : null,
-                    ),
-                    const SizedBox(height: 16),
+                      CustomerTextField(
+                        controller: _phoneController,
+                        label: "Phone Number",
+                        icon: Icons.phone_outlined,
+                        keyboardType: TextInputType.phone,
+                        // validator: (v) => v?.trim().isEmpty == true
+                        //     ? "Phone is required"
+                        //     : null,
+                      ),
+                      const SizedBox(height: 16),
 
-                    CustomerTextField(
-                      controller: _addressController,
-                      label: "Address",
-                      icon: Icons.location_on_outlined,
-                      textCapitalization: TextCapitalization.sentences,
-                    ),
-                    const SizedBox(height: 32),
-                  ],
+                      CustomerTextField(
+                        controller: _addressController,
+                        label: "Address",
+                        icon: Icons.location_on_outlined,
+                        textCapitalization: TextCapitalization.sentences,
+                      ),
+                      const SizedBox(height: 32),
+                    ],
+                  ),
                 ),
               ),
             ),

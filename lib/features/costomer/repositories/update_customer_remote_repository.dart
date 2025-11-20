@@ -12,6 +12,7 @@ class UpdateCustomerRemoteRepository {
   );
 
   Future<UpdateCustomerResponseModel> updateCustomer(
+    String id,
     String name,
     String phone,
     String address,
@@ -22,6 +23,7 @@ class UpdateCustomerRemoteRepository {
       );
       final response = await _updateCustomerApiService.updateCustomer(
         token,
+        id,
         name,
         phone,
         address,

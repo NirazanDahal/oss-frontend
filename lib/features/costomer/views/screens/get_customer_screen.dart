@@ -42,27 +42,23 @@ class _GetCustomerScreenState extends State<GetCustomerScreen> with RouteAware {
     super.dispose();
   }
 
-  // Screen opened for first time
   @override
   void didPush() {
     if (_loadedOnce) {
-      log('screen opened for the first time');
       context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
       _loadedOnce = false;
     }
   }
 
-  // Screen becomes visible again after navigating back
   @override
   void didPopNext() {
-    context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
+    // context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
   }
 
-  // Screen goes out of focus (not required, but optional)
-  @override
-  void didPushNext() {
-    log("GetCustomerScreen hidden");
-  }
+  // @override
+  // void didPushNext() {
+  //   log("GetCustomerScreen hidden");
+  // }
 
   void _onSearchChanged(String query) {
     _debounceTimer?.cancel();

@@ -15,6 +15,7 @@ class UpdateCustomerBloc
       emit(UpdateCustomerLoadingState());
       try {
         final response = await _updateCustomerRepository.updateCustomer(
+          event.id,
           event.name,
           event.phone,
           event.address,

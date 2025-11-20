@@ -11,11 +11,12 @@ import 'package:oss_frontend/features/costomer/models/res/update_customer_respon
 class UpdateCustomerApiService {
   Future<UpdateCustomerResponseModel> updateCustomer(
     String token,
+    String id,
     String name,
     String phone,
     String address,
   ) async {
-    final url = Uri.parse(ApiConstants.customer);
+    final url = Uri.parse('${ApiConstants.customer}/$id');
     final body = UpdateCustomerRequestModel(
       name: name,
       phone: phone,

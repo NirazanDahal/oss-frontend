@@ -42,4 +42,11 @@ class ResponseConstants {
       'Customer updated successfully.';
   static const String updateCustomerValidationErrorMessage =
       'Atleat one field needs to be updated.';
+  //Delete Customer
+  static const String deleteCustomerFailureMessage =
+      'Cannot delete customer at this time, try again later...';
+  static const String deleteCustomerLoadingState =
+      'Customer is being deleted, please wait...';
+  static const String deleteCustomerSuccessMessage =
+      'Customer deleted successfully';
 }
