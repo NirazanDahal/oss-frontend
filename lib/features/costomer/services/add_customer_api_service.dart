@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:oss_frontend/core/constants/api_constants.dart';
@@ -28,6 +29,7 @@ class AddCustomerApiService {
       },
       body: jsonEncode(body.toJson()),
     );
+    log(response.statusCode.toString());
     final decoded = jsonDecode(response.body);
     if (response.statusCode == 201) {
       return AddCustomerResponseModel.fromJson(decoded);

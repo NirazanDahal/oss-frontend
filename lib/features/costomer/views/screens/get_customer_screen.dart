@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:oss_frontend/core/base/route_aware_state.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
+import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_event.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_state.dart';
-import 'package:oss_frontend/features/costomer/views/widgets/add_customer_dialog_content.dart';
+import 'package:oss_frontend/features/costomer/views/widgets/add_customer_widget.dart';
+import 'package:oss_frontend/main.dart';
 import '../widgets/customer_search_bar.dart';
 import '../widgets/customer_card.dart';
 import '../widgets/empty_state.dart';
@@ -20,31 +21,47 @@ class GetCustomerScreen extends StatefulWidget {
   State<GetCustomerScreen> createState() => _GetCustomerScreenState();
 }
 
-class _GetCustomerScreenState extends RouteAwareState<GetCustomerScreen> {
+class _GetCustomerScreenState extends State<GetCustomerScreen> with RouteAware {
   final _scrollController = ScrollController();
   final _searchController = TextEditingController();
   Timer? _debounceTimer;
+  bool _loadedOnce = true;
 
   @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >=
-          _scrollController.position.maxScrollExtent - 200) {
-        context.read<GetCustomerBloc>().add(GetCustomerLoadMoreEvent());
-      }
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
-  void onScreenFocusedFirstTime() {
-    log('route observer is here');
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    _debounceTimer?.cancel();
+    _scrollController.dispose();
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  // Screen opened for first time
+  @override
+  void didPush() {
+    if (_loadedOnce) {
+      log('screen opened for the first time');
+      context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
+      _loadedOnce = false;
+    }
+  }
+
+  // Screen becomes visible again after navigating back
+  @override
+  void didPopNext() {
     context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
   }
 
+  // Screen goes out of focus (not required, but optional)
   @override
-  void onScreenFocusedAgain() {
-    context.read<GetCustomerBloc>().add(GetCustomerSubmittedEvent());
+  void didPushNext() {
+    log("GetCustomerScreen hidden");
   }
 
   void _onSearchChanged(String query) {
@@ -56,32 +73,15 @@ class _GetCustomerScreenState extends RouteAwareState<GetCustomerScreen> {
     });
   }
 
-  void _showAddCustomerDialog() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: const AddCustomerDialogContent(),
-        ),
-      ),
-    );
-  }
-
   @override
-  void dispose() {
-    _debounceTimer?.cancel();
-    _scrollController.dispose();
-    _searchController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 200) {
+        context.read<GetCustomerBloc>().add(GetCustomerLoadMoreEvent());
+      }
+    });
   }
 
   @override
@@ -98,7 +98,9 @@ class _GetCustomerScreenState extends RouteAwareState<GetCustomerScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: _showAddCustomerDialog,
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.addCustomer);
+            },
             icon: const Icon(Icons.person_add),
             tooltip: "Add Customer",
           ),
@@ -184,6 +186,26 @@ class _GetCustomerScreenState extends RouteAwareState<GetCustomerScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showAddCustomerDialog() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: const AddCustomerWidget(),
+        ),
       ),
     );
   }
