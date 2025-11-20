@@ -11,4 +11,8 @@ class AuthLocalRepositoty {
   String getToken(String key) {
     return _localStorageService.getString(key);
   }
+
+  Future<void> clearAll() async {
+    return await _localStorageService.clearAll();
+  }
 }

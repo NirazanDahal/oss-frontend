@@ -6,6 +6,7 @@ class CustomerCard extends StatelessWidget {
   final String phone;
   final String address;
   final int points;
+  final VoidCallback voidCallback;
 
   const CustomerCard({
     super.key,
@@ -13,6 +14,7 @@ class CustomerCard extends StatelessWidget {
     required this.phone,
     required this.address,
     required this.points,
+    required this.voidCallback,
   });
 
   @override
@@ -22,6 +24,7 @@ class CustomerCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: ListTile(
+        onTap: voidCallback,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 12,

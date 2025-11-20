@@ -80,9 +80,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       BlocConsumer<LoginBloc, LoginState>(
                         listener: (context, state) {
                           if (state is LoginSuccessState) {
-                            SnackUtils.showSuccess(
-                              ResponseConstants.loginSuccessMessage,
-                            );
+                            // SnackUtils.showSuccess(
+                            //   ResponseConstants.loginSuccessMessage,
+                            // );
                             Navigator.pushNamedAndRemoveUntil(
                               context,
                               AppRoutes.dashBoardScreen,
@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           }
                           if (state is LoginFailureState) {
-                            SnackUtils.showError(state.error.error);
+                            SnackUtils.showError(context, state.error.error);
                           }
                         },
                         builder: (context, state) {

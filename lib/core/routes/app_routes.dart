@@ -3,23 +3,24 @@ import 'package:oss_frontend/features/auth/views/screens/login_screen.dart';
 import 'package:oss_frontend/features/auth/views/screens/register_screen.dart';
 import 'package:oss_frontend/features/costomer/views/screens/get_customer_screen.dart';
 import 'package:oss_frontend/features/costomer/views/widgets/add_customer_widget.dart';
+import 'package:oss_frontend/features/costomer/views/widgets/update_customer_widget.dart';
 import 'package:oss_frontend/features/dashboard/views/screens/dashboard_screen.dart';
 import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
+import 'package:oss_frontend/features/splash_screen.dart';
 
 class AppRoutes {
+  static const String splashScreen = '/splash';
   static const String registerScreen = '/register';
   static const String loginScreen = '/login';
   static const String profileScreen = '/profile';
   static const String getCustomerScreen = '/getCustomer';
   static const String addCustomer = '/addCustomer';
+  static const String updateCustomer = '/updateCustomer';
   static const String dashBoardScreen = '/dashboard';
-
-  static String getRouteName(String routeName) {
-    return routeName;
-  }
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
+      splashScreen: (context) => const SplashScreen(),
       registerScreen: (context) => const RegisterScreen(),
       loginScreen: (context) => const LoginScreen(),
       profileScreen: (context) => const ProfileScreen(),
@@ -27,5 +28,16 @@ class AppRoutes {
       addCustomer: (context) => const AddCustomerWidget(),
       dashBoardScreen: (context) => const DashboardScreen(),
     };
+  }
+
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case updateCustomer:
+        final customer = settings.arguments;
+        return MaterialPageRoute(
+          builder: (_) => UpdateCustomerWidget(customer: customer),
+        );
+    }
+    return null;
   }
 }

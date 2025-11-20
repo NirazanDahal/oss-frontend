@@ -6,3 +6,7 @@ class LoginSubmittedEvent extends LoginEvent {
 
   LoginSubmittedEvent(this.email, this.password);
 }
+
+class LoginStatusCheckEvent extends LoginEvent {}
+
+class LogoutEvent extends LoginEvent {}

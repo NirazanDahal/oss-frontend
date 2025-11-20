@@ -88,12 +88,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         listener: (context, state) {
                           if (state is RegisterSuccessState) {
                             SnackUtils.showSuccess(
+                              context,
                               ResponseConstants.registerSuccessMessage,
                             );
                             Navigator.pop(context);
                           }
-                          if (state is RegisterFailureState)
-                            SnackUtils.showError(state.error.error);
+                          if (state is RegisterFailureState) {
+                            SnackUtils.showError(context, state.error.error);
+                          }
                         },
                         builder: (context, state) {
                           return PrimaryButton(

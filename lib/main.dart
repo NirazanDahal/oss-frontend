@@ -5,11 +5,14 @@ import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
+import 'package:oss_frontend/features/auth/repositories/local/auth_local_repositoty.dart';
 import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/blocs/add_customer/add_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_bloc.dart';
+import 'package:oss_frontend/features/costomer/blocs/update_customer/update_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/repositories/add_customer_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/repositories/get_customer_remote_repository.dart';
+import 'package:oss_frontend/features/costomer/repositories/update_customer_remote_repository.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
@@ -32,7 +35,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => RegisterBloc(getIt<AuthRemoteRepository>()),
         ),
-        BlocProvider(create: (_) => LoginBloc(getIt<AuthRemoteRepository>())),
+        BlocProvider(
+          create: (_) => LoginBloc(
+            getIt<AuthRemoteRepository>(),
+            getIt<AuthLocalRepositoty>(),
+          ),
+        ),
         BlocProvider(
           create: (_) => ProfileBloc(getIt<ProfileRemoteRepository>()),
         ),
@@ -42,13 +50,17 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => GetCustomerBloc(getIt<GetCustomerRemoteRepository>()),
         ),
+        BlocProvider(
+          create: (_) =>
+              UpdateCustomerBloc(getIt<UpdateCustomerRemoteRepository>()),
+        ),
       ],
       child: MaterialApp(
-        scaffoldMessengerKey: SnackUtils.messengerKey,
         debugShowCheckedModeBanner: false,
         navigatorObservers: [routeObserver],
-        initialRoute: AppRoutes.loginScreen,
+        initialRoute: AppRoutes.splashScreen,
         routes: AppRoutes.getRoutes(),
+        onGenerateRoute: AppRoutes.onGenerateRoute,
       ),
     );
   }

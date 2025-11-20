@@ -41,6 +41,7 @@ dependencies:
   connectivity_plus: ^7.0.0
   flutter_screenutil: ^5.9.3
   dio: ^5.9.0
+  top_snackbar_flutter: ^3.3.0
 
 dev_dependencies:
   flutter_test:

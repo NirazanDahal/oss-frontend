@@ -14,4 +14,8 @@ class LocalStorageService {
   String getString(String key) {
     return _preferences.getString(key) ?? "";
   }
+
+  Future<void> clearAll() async {
+    await _preferences.clear();
+  }
 }

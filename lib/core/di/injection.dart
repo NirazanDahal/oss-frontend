@@ -4,8 +4,10 @@ import 'package:oss_frontend/features/auth/repositories/remote/auth_remote_repos
 import 'package:oss_frontend/features/auth/services/auth_api_service.dart';
 import 'package:oss_frontend/features/costomer/repositories/add_customer_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/repositories/get_customer_remote_repository.dart';
+import 'package:oss_frontend/features/costomer/repositories/update_customer_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/services/add_customer_api_service.dart';
 import 'package:oss_frontend/features/costomer/services/get_customer_api_service.dart';
+import 'package:oss_frontend/features/costomer/services/update_customer_api_service.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 import 'package:oss_frontend/features/profile/services/profile_api_service.dart';
 import '../utils/local_storage_service.dart';
@@ -29,6 +31,9 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<GetCustomerApiService>(
     () => GetCustomerApiService(),
+  );
+  getIt.registerLazySingleton<UpdateCustomerApiService>(
+    () => UpdateCustomerApiService(),
   );
 
   //Repository
@@ -56,6 +61,12 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<GetCustomerRemoteRepository>(
     () => GetCustomerRemoteRepository(
       getIt<GetCustomerApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+  getIt.registerLazySingleton<UpdateCustomerRemoteRepository>(
+    () => UpdateCustomerRemoteRepository(
+      getIt<UpdateCustomerApiService>(),
       getIt<AuthLocalRepositoty>(),
     ),
   );

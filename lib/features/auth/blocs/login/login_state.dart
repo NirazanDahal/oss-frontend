@@ -16,3 +16,11 @@ class LoginFailureState extends LoginState {
   final ErrorResponseModel error;
   LoginFailureState(this.error);
 }
+
+class LoginStatusSuccessState extends LoginState {}
+
+class LoginStatusFailureState extends LoginState {}
+
+class LogoutSuccessState extends LoginState {}
+
+class LogoutFailureState extends LoginState {}

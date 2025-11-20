@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
@@ -8,8 +6,6 @@ import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/costomer/blocs/add_customer/add_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/blocs/add_customer/add_customer_event.dart';
 import 'package:oss_frontend/features/costomer/blocs/add_customer/add_customer_state.dart';
-import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_bloc.dart';
-import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_event.dart';
 import '../widgets/customer_text_field.dart';
 
 class AddCustomerWidget extends StatefulWidget {
@@ -53,8 +49,6 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
               ),
             ),
             const SizedBox(height: 32),
-
-            // Form Fields
             Expanded(
               child: Form(
                 key: _formKey,
@@ -66,8 +60,8 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                       label: "Full Name",
                       icon: Icons.person_outline,
                       textCapitalization: TextCapitalization.words,
-                      validator: (v) =>
-                          v?.trim().isEmpty == true ? "Name is required" : null,
+                      // validator: (v) =>
+                      //     v?.trim().isEmpty == true ? "Name is required" : null,
                     ),
                     const SizedBox(height: 16),
 
@@ -76,15 +70,15 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                       label: "Phone Number",
                       icon: Icons.phone_outlined,
                       keyboardType: TextInputType.phone,
-                      validator: (v) => v?.trim().isEmpty == true
-                          ? "Phone is required"
-                          : null,
+                      // validator: (v) => v?.trim().isEmpty == true
+                      //     ? "Phone is required"
+                      //     : null,
                     ),
                     const SizedBox(height: 16),
 
                     CustomerTextField(
                       controller: _addressController,
-                      label: "Address (Optional)",
+                      label: "Address",
                       icon: Icons.location_on_outlined,
                       textCapitalization: TextCapitalization.sentences,
                     ),
@@ -99,12 +93,13 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
               listener: (context, state) {
                 if (state is AddCustomerSuccessState) {
                   SnackUtils.showSuccess(
+                    context,
                     ResponseConstants.addCustomerSuccessMessage,
                   );
                   Navigator.pop(context);
                 }
                 if (state is AddCustomerFailureState) {
-                  SnackUtils.showError(state.error.error);
+                  SnackUtils.showError(context, state.error.error);
                 }
               },
               builder: (context, state) {
@@ -115,13 +110,21 @@ class _AddCustomerWidgetState extends State<AddCustomerWidget> {
                     onPressed: state is AddCustomerLoadingState
                         ? null
                         : () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_nameController.text.isNotEmpty ||
+                                _phoneController.text.isNotEmpty ||
+                                _addressController.text.isNotEmpty) {
                               context.read<AddCustomerBloc>().add(
                                 AddCustomerSubmittedEvent(
                                   _nameController.text.trim(),
                                   _phoneController.text.trim(),
                                   _addressController.text.trim(),
                                 ),
+                              );
+                            } else {
+                              SnackUtils.showError(
+                                context,
+                                ResponseConstants
+                                    .addCustomerValidationErrorMessage,
                               );
                             }
                           },

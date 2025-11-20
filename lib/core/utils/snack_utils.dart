@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class SnackUtils {
-  //Global key for accessing scaffold messenger anywhere in the app
-  static final GlobalKey<ScaffoldMessengerState> messengerKey =
-      GlobalKey<ScaffoldMessengerState>();
-
-  //Generic show method
-  static void show(String message, {Color? backgroundColor}) {
-    messengerKey.currentState?.showSnackBar(
-      SnackBar(
-        content: Text(message, style: TextStyle(color: AppColors.background)),
-        backgroundColor: backgroundColor ?? AppColors.primary,
-        behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.all(16),
-        duration: const Duration(seconds: 5),
-      ),
+  static void showSuccess(BuildContext context, String message) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.success(message: message),
     );
   }
 
-  static void showSuccess(String message) {
-    show(message, backgroundColor: Colors.green);
+  static void showInfo(BuildContext context, String message) {
+    showTopSnackBar(Overlay.of(context), CustomSnackBar.info(message: message));
   }
 
-  static void showError(String message) {
-    show(message, backgroundColor: Colors.redAccent);
+  static void showError(BuildContext context, String message) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.error(message: message),
+    );
   }
 
-  static void showInfo(String message) {
-    show(message, backgroundColor: Colors.blueAccent);
+  static void showPersistent(
+    BuildContext context,
+    String message,
+    void Function(AnimationController controller) onInit,
+  ) {
+    showTopSnackBar(
+      Overlay.of(context),
+      CustomSnackBar.info(message: message),
+      persistent: true,
+      onAnimationControllerInit: onInit,
+    );
   }
 }
