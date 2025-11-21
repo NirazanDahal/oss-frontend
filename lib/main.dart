@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/di/injection.dart';
 import 'package:oss_frontend/core/routes/app_routes.dart';
-import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/auth/blocs/login/login_bloc.dart';
 import 'package:oss_frontend/features/auth/blocs/register/register_bloc.dart';
 import 'package:oss_frontend/features/auth/repositories/local/auth_local_repositoty.dart';

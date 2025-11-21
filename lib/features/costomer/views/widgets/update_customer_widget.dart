@@ -6,7 +6,6 @@ import 'package:oss_frontend/core/utils/snack_utils.dart';
 import 'package:oss_frontend/features/costomer/blocs/update_customer/update_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/blocs/update_customer/update_customer_event.dart';
 import 'package:oss_frontend/features/costomer/blocs/update_customer/update_customer_state.dart';
-import 'package:oss_frontend/features/costomer/models/res/add_customer_response_model.dart';
 import '../widgets/customer_text_field.dart';
 
 class UpdateCustomerWidget extends StatefulWidget {

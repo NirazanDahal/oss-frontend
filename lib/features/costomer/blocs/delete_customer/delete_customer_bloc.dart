@@ -5,7 +5,6 @@ import 'package:oss_frontend/core/utils/exception_utils.dart';
 import 'package:oss_frontend/features/costomer/blocs/delete_customer/delete_customer_event.dart';
 import 'package:oss_frontend/features/costomer/blocs/delete_customer/delete_customer_state.dart';
 import 'package:oss_frontend/features/costomer/repositories/delete_customer_remote_repository.dart';
-import 'package:oss_frontend/features/costomer/services/delete_customer_api_service.dart';
 
 class DeleteCustomerBloc
     extends Bloc<DeleteCustomerEvent, DeleteCustomerState> {

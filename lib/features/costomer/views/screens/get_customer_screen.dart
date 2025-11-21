@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
@@ -7,7 +6,6 @@ import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_bloc.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_event.dart';
 import 'package:oss_frontend/features/costomer/blocs/get_customer/get_customer_state.dart';
-import 'package:oss_frontend/features/costomer/views/widgets/add_customer_widget.dart';
 import 'package:oss_frontend/main.dart';
 import '../widgets/customer_search_bar.dart';
 import '../widgets/customer_card.dart';
@@ -189,26 +187,6 @@ class _GetCustomerScreenState extends State<GetCustomerScreen> with RouteAware {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showAddCustomerDialog() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: const AddCustomerWidget(),
-        ),
       ),
     );
   }

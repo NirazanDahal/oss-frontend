@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:oss_frontend/core/constants/api_constants.dart';
 import 'package:oss_frontend/core/utils/error_response_model.dart';
