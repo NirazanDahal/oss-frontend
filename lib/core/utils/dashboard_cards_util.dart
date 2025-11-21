@@ -20,7 +20,7 @@ class DashboardCardsUtil {
       'name': 'Purchases',
       'icon': Icons.shopping_cart_outlined,
       'color': AppColors.cardOrange,
-      // 'route': AppRoutes.purchaseScreen,
+      'route': AppRoutes.addPurchaseScreen,
     },
     {
       'name': 'Sales',

@@ -9,6 +9,7 @@ import 'package:oss_frontend/features/product/models/res/add_product_response_mo
 import 'package:oss_frontend/features/product/views/screens/add_product_screen.dart';
 import 'package:oss_frontend/features/product/views/screens/get_product_screen.dart';
 import 'package:oss_frontend/features/product/views/widgets/update_product_widget.dart';
+import 'package:oss_frontend/features/purchase/views/screens/add_purchase_screen.dart';
 import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
 import 'package:oss_frontend/features/splash_screen.dart';
 
@@ -24,6 +25,7 @@ class AppRoutes {
   static const String getProductScreen = '/getProduct';
   static const String addProductScreen = '/addProduct';
   static const String updateProductScreen = '/updateProduct';
+  static const String addPurchaseScreen = '/addPurchase';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -36,6 +38,7 @@ class AppRoutes {
       dashBoardScreen: (context) => const DashboardScreen(),
       getProductScreen: (context) => const GetProductScreen(),
       addProductScreen: (context) => const AddProductScreen(),
+      addPurchaseScreen: (context) => const AddPurchaseScreen(),
     };
   }
 

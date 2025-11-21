@@ -16,9 +16,12 @@ import 'package:oss_frontend/features/product/services/add_product_api_service.d
 import 'package:oss_frontend/features/product/services/delete_product_api_service.dart';
 import 'package:oss_frontend/features/product/services/get_product_api_service.dart';
 import 'package:oss_frontend/features/product/services/update_product_api_service.dart';
+import 'package:oss_frontend/features/purchase/services/add_purchase_api_service.dart';
+import 'package:oss_frontend/features/purchase/repositories/add_purchase_remote_repository.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 import 'package:oss_frontend/features/profile/services/profile_api_service.dart';
 import '../utils/local_storage_service.dart';
+import 'package:http/http.dart' as http;
 
 final GetIt getIt = GetIt.instance;
 
@@ -30,6 +33,9 @@ Future<void> setupDependencies() async {
   });
 
   await getIt.allReady();
+
+  //HTTP Client
+  getIt.registerLazySingleton<http.Client>(() => http.Client());
 
   //API service
   getIt.registerLazySingleton<AuthApiService>(() => AuthApiService());
@@ -56,6 +62,11 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<DeleteProductApiService>(
     () => DeleteProductApiService(),
+  );
+
+  //Purchase API services
+  getIt.registerLazySingleton<AddPurchaseApiService>(
+    () => AddPurchaseApiService(getIt<http.Client>()),
   );
 
   //Repository
@@ -115,6 +126,14 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<DeleteProductRemoteRepository>(
     () => DeleteProductRemoteRepository(
       getIt<DeleteProductApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+
+  //Purchase repositories
+  getIt.registerLazySingleton<AddPurchaseRemoteRepository>(
+    () => AddPurchaseRemoteRepository(
+      getIt<AddPurchaseApiService>(),
       getIt<AuthLocalRepositoty>(),
     ),
   );
