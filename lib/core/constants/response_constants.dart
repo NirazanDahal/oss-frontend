@@ -60,7 +60,8 @@ class ResponseConstants {
   static const String addProductValidationErrorMessage =
       'All details are required.';
   //Get Product
-  static const String getProductFailureMessage = "Failed to fetch products";
+  static const String getProductFailureMessage =
+      "Failed to load products, try again later...";
   static const String getProductLoadingMessage =
       'Products are loading, please wait...';
   static const String getProductSuccessMessage =
@@ -80,7 +81,14 @@ class ResponseConstants {
       'Product is being deleted, please wait...';
   static const String deleteProductSuccessMessage =
       'Product deleted successfully';
-  //Purchase
+  //Get Purchase
+  static const String getPurchaseFailureMessage =
+      'Failed to load purchase history, try again later...';
+  static const String getPurchaseLoadingMessage =
+      'Purchase history is being loaded, please wait...';
+  static const String getPurchaseSuccessMessage =
+      'Purchase history loaded successfully';
+  //Update Purchase
   static const String updatePurchaseFailureMessage =
       'Cannot update purchase at this time, try again later...';
   static const String updatePurchaseLoadingMessage =

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
+import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/routes/app_routes.dart';
 import 'package:oss_frontend/features/costomer/views/widgets/empty_state.dart';
 import 'package:oss_frontend/features/costomer/views/widgets/error_state.dart';
@@ -155,7 +156,7 @@ class _GetPurchaseScreenState extends State<GetPurchaseScreen> with RouteAware {
 
                   if (state is GetPurchaseFailureState) {
                     return ErrorState(
-                      message: state.error.error,
+                      message: ResponseConstants.getPurchaseFailureMessage,
                       onRetry: () => context.read<GetPurchaseBloc>().add(
                         GetPurchaseSubmittedEvent(),
                       ),

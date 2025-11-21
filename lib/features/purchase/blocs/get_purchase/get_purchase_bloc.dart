@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/utils/error_response_model.dart';
 import 'package:oss_frontend/features/purchase/blocs/get_purchase/get_purchase_event.dart';
 import 'package:oss_frontend/features/purchase/blocs/get_purchase/get_purchase_state.dart';
@@ -38,7 +39,7 @@ class GetPurchaseBloc extends Bloc<GetPurchaseEvent, GetPurchaseState> {
           GetPurchaseFailureState(
             ErrorResponseModel(
               success: false,
-              error: e.toString().replaceAll('Exception: ', ''),
+              error: ResponseConstants.getPurchaseFailureMessage,
             ),
           ),
         );
