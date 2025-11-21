@@ -21,7 +21,9 @@ import 'package:oss_frontend/features/product/repositories/delete_product_remote
 import 'package:oss_frontend/features/product/repositories/get_product_remote_repository.dart';
 import 'package:oss_frontend/features/product/repositories/update_product_remote_repository.dart';
 import 'package:oss_frontend/features/purchase/blocs/add_purchase/add_purchase_bloc.dart';
+import 'package:oss_frontend/features/purchase/blocs/get_purchase/get_purchase_bloc.dart';
 import 'package:oss_frontend/features/purchase/repositories/add_purchase_remote_repository.dart';
+import 'package:oss_frontend/features/purchase/repositories/get_purchase_remote_repository.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
@@ -79,6 +81,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => AddPurchaseBloc(getIt<AddPurchaseRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => GetPurchaseBloc(getIt<GetPurchaseRemoteRepository>()),
         ),
       ],
       child: MaterialApp(
