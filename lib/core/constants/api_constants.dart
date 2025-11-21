@@ -1,6 +1,7 @@
 class ApiConstants {
   // static const String baseUrl = 'http://192.168.2.114:5001/api';
   static const String baseUrl = 'http://192.168.1.81:5001/api';
+
   //auth
   static const String register = '$baseUrl/auth/register';
   static const String login = '$baseUrl/auth/login';
@@ -14,4 +15,8 @@ class ApiConstants {
 
   //purchase
   static const String purchase = '$baseUrl/purchase';
+
+  //sales
+  static const String sales = '$baseUrl/sales';
+  static const String redeem = '$baseUrl/redeem';
 }
