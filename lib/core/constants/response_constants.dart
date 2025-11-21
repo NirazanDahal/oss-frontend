@@ -49,4 +49,36 @@ class ResponseConstants {
       'Customer is being deleted, please wait...';
   static const String deleteCustomerSuccessMessage =
       'Customer deleted successfully';
+  //Add Product
+  static const String addProductFailureMessage =
+      'Cannot create product at this time, try again later...';
+  static const String addProductLoadingMessage =
+      'Product is being added, please wait...';
+  static const String addProductSuccessMessage =
+      'Product added successfully.';
+  static const String addProductValidationErrorMessage =
+      'All details are required.';
+  //Get Product
+  static const String getProductFailureMessage =
+      'Cannot load products at this time, try again later...';
+  static const String getProductLoadingMessage =
+      'Products are loading, please wait...';
+  static const String getProductSuccessMessage =
+      'Products loaded successfully.';
+  //Update Product
+  static const String updateProductFailureMessage =
+      'Cannot update product at this time, try again later...';
+  static const String updateProductLoadingMessage =
+      'Product is being updated, please wait...';
+  static const String updateProductSuccessMessage =
+      'Product updated successfully.';
+  static const String updateProductValidationErrorMessage =
+      'At least one field needs to be updated.';
+  //Delete Product
+  static const String deleteProductFailureMessage =
+      'Cannot delete product at this time, try again later...';
+  static const String deleteProductLoadingState =
+      'Product is being deleted, please wait...';
+  static const String deleteProductSuccessMessage =
+      'Product deleted successfully';
 }

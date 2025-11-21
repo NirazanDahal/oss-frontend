@@ -5,6 +5,10 @@ import 'package:oss_frontend/features/costomer/views/screens/get_customer_screen
 import 'package:oss_frontend/features/costomer/views/widgets/add_customer_widget.dart';
 import 'package:oss_frontend/features/costomer/views/widgets/update_customer_widget.dart';
 import 'package:oss_frontend/features/dashboard/views/screens/dashboard_screen.dart';
+import 'package:oss_frontend/features/product/models/res/add_product_response_model.dart';
+import 'package:oss_frontend/features/product/views/screens/add_product_screen.dart';
+import 'package:oss_frontend/features/product/views/screens/get_product_screen.dart';
+import 'package:oss_frontend/features/product/views/widgets/update_product_widget.dart';
 import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
 import 'package:oss_frontend/features/splash_screen.dart';
 
@@ -17,6 +21,9 @@ class AppRoutes {
   static const String addCustomer = '/addCustomer';
   static const String updateCustomer = '/updateCustomer';
   static const String dashBoardScreen = '/dashboard';
+  static const String getProductScreen = '/getProduct';
+  static const String addProductScreen = '/addProduct';
+  static const String updateProductScreen = '/updateProduct';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -27,6 +34,8 @@ class AppRoutes {
       getCustomerScreen: (context) => const GetCustomerScreen(),
       addCustomer: (context) => const AddCustomerWidget(),
       dashBoardScreen: (context) => const DashboardScreen(),
+      getProductScreen: (context) => const GetProductScreen(),
+      addProductScreen: (context) => const AddProductScreen(),
     };
   }
 
@@ -36,6 +45,11 @@ class AppRoutes {
         final customer = settings.arguments;
         return MaterialPageRoute(
           builder: (_) => UpdateCustomerWidget(customer: customer),
+        );
+      case updateProductScreen:
+        final product = settings.arguments as ProductData;
+        return MaterialPageRoute(
+          builder: (_) => UpdateProductWidget(product: product),
         );
     }
     return null;

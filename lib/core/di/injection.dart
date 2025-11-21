@@ -8,6 +8,14 @@ import 'package:oss_frontend/features/costomer/repositories/update_customer_remo
 import 'package:oss_frontend/features/costomer/services/add_customer_api_service.dart';
 import 'package:oss_frontend/features/costomer/services/get_customer_api_service.dart';
 import 'package:oss_frontend/features/costomer/services/update_customer_api_service.dart';
+import 'package:oss_frontend/features/product/repositories/add_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/delete_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/get_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/update_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/services/add_product_api_service.dart';
+import 'package:oss_frontend/features/product/services/delete_product_api_service.dart';
+import 'package:oss_frontend/features/product/services/get_product_api_service.dart';
+import 'package:oss_frontend/features/product/services/update_product_api_service.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 import 'package:oss_frontend/features/profile/services/profile_api_service.dart';
 import '../utils/local_storage_service.dart';
@@ -34,6 +42,20 @@ Future<void> setupDependencies() async {
   );
   getIt.registerLazySingleton<UpdateCustomerApiService>(
     () => UpdateCustomerApiService(),
+  );
+
+  //Product API services
+  getIt.registerLazySingleton<AddProductApiService>(
+    () => AddProductApiService(),
+  );
+  getIt.registerLazySingleton<GetProductApiService>(
+    () => GetProductApiService(),
+  );
+  getIt.registerLazySingleton<UpdateProductApiService>(
+    () => UpdateProductApiService(),
+  );
+  getIt.registerLazySingleton<DeleteProductApiService>(
+    () => DeleteProductApiService(),
   );
 
   //Repository
@@ -67,6 +89,32 @@ Future<void> setupDependencies() async {
   getIt.registerLazySingleton<UpdateCustomerRemoteRepository>(
     () => UpdateCustomerRemoteRepository(
       getIt<UpdateCustomerApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+
+  //Product repositories
+  getIt.registerLazySingleton<AddProductRemoteRepository>(
+    () => AddProductRemoteRepository(
+      getIt<AddProductApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+  getIt.registerLazySingleton<GetProductRemoteRepository>(
+    () => GetProductRemoteRepository(
+      getIt<GetProductApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+  getIt.registerLazySingleton<UpdateProductRemoteRepository>(
+    () => UpdateProductRemoteRepository(
+      getIt<UpdateProductApiService>(),
+      getIt<AuthLocalRepositoty>(),
+    ),
+  );
+  getIt.registerLazySingleton<DeleteProductRemoteRepository>(
+    () => DeleteProductRemoteRepository(
+      getIt<DeleteProductApiService>(),
       getIt<AuthLocalRepositoty>(),
     ),
   );

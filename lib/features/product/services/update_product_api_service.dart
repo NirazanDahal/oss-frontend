@@ -4,28 +4,29 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:oss_frontend/core/constants/api_constants.dart';
 import 'package:oss_frontend/core/utils/error_response_model.dart';
-import 'package:oss_frontend/core/utils/exception_utils.dart';
-import 'package:oss_frontend/features/product/models/req/add_product_request_model.dart';
-import 'package:oss_frontend/features/product/models/res/add_product_response_model.dart';
+import 'package:oss_frontend/features/product/models/req/update_product_request_model.dart';
+import 'package:oss_frontend/features/product/models/res/update_product_response_model.dart';
 
-class AddProductApiService {
-  Future<AddProductResponseModel> addProduct(
+class UpdateProductApiService {
+  Future<UpdateProductResponseModel> updateProduct(
     String token,
+    String productId,
     String name,
     String batchNo,
     String quantity,
     String purchasePrice,
     String sellingPrice,
   ) async {
-    final url = Uri.parse(ApiConstants.products);
-    final body = AddProductRequestModel(
+    final url = Uri.parse('${ApiConstants.products}/$productId');
+    final body = UpdateProductRequestModel(
       name: name,
       batchNo: batchNo,
       quantity: quantity,
       purchasePrice: purchasePrice,
       sellingPrice: sellingPrice,
     );
-    final response = await http.post(
+    
+    final response = await http.put(
       url,
       headers: {
         'Content-Type': 'application/json',
@@ -33,12 +34,14 @@ class AddProductApiService {
       },
       body: jsonEncode(body.toJson()),
     );
-    log(response.statusCode.toString());
+    
+    log('Update Product Status: ${response.statusCode}');
     final decoded = jsonDecode(response.body);
-    if (response.statusCode == 201) {
-      return AddProductResponseModel.fromJson(decoded);
+    
+    if (response.statusCode == 200) {
+      return UpdateProductResponseModel.fromJson(decoded);
     } else {
-      throw CreateException(ErrorResponseModel.fromJson(decoded));
+      throw Exception(ErrorResponseModel.fromJson(decoded).error);
     }
   }
 }

@@ -4,23 +4,39 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
 import 'package:oss_frontend/core/constants/response_constants.dart';
 import 'package:oss_frontend/core/utils/snack_utils.dart';
-import 'package:oss_frontend/features/product/blocs/add_product/add_product_bloc.dart';
+import 'package:oss_frontend/features/product/blocs/update_product/update_product_bloc.dart';
+import 'package:oss_frontend/features/product/models/res/add_product_response_model.dart';
 import '../widgets/product_text_field.dart';
 
-class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
+class UpdateProductWidget extends StatefulWidget {
+  final ProductData product;
+
+  const UpdateProductWidget({super.key, required this.product});
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  State<UpdateProductWidget> createState() => _UpdateProductWidgetState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
-  final _nameController = TextEditingController();
-  final _batchNoController = TextEditingController();
-  final _quantityController = TextEditingController();
-  final _purchasePriceController = TextEditingController();
-  final _sellingPriceController = TextEditingController();
+class _UpdateProductWidgetState extends State<UpdateProductWidget> {
+  late final TextEditingController _nameController;
+  late final TextEditingController _batchNoController;
+  late final TextEditingController _quantityController;
+  late final TextEditingController _purchasePriceController;
+  late final TextEditingController _sellingPriceController;
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.product.name);
+    _batchNoController = TextEditingController(text: widget.product.batchNo);
+    _quantityController =
+        TextEditingController(text: widget.product.quantity.toString());
+    _purchasePriceController =
+        TextEditingController(text: widget.product.purchasePrice.toString());
+    _sellingPriceController =
+        TextEditingController(text: widget.product.sellingPrice.toString());
+  }
 
   @override
   void dispose() {
@@ -38,7 +54,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          "Add New Product",
+          "Update Product",
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -109,16 +125,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
             ),
 
             // Submit Button
-            BlocConsumer<AddProductBloc, AddProductState>(
+            BlocConsumer<UpdateProductBloc, UpdateProductState>(
               listener: (context, state) {
-                if (state is AddProductSuccessState) {
+                if (state is UpdateProductSuccessState) {
                   SnackUtils.showSuccess(
                     context,
-                    ResponseConstants.addProductSuccessMessage,
+                    ResponseConstants.updateProductSuccessMessage,
                   );
                   Navigator.pop(context);
                 }
-                if (state is AddProductFailureState) {
+                if (state is UpdateProductFailureState) {
                   SnackUtils.showError(context, state.error.error);
                 }
               },
@@ -127,7 +143,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   width: double.infinity,
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: state is AddProductLoadingState
+                    onPressed: state is UpdateProductLoadingState
                         ? null
                         : () {
                             if (_nameController.text.isNotEmpty &&
@@ -135,8 +151,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
                                 _quantityController.text.isNotEmpty &&
                                 _purchasePriceController.text.isNotEmpty &&
                                 _sellingPriceController.text.isNotEmpty) {
-                              context.read<AddProductBloc>().add(
-                                    AddProductSubmittedEvent(
+                              context.read<UpdateProductBloc>().add(
+                                    UpdateProductSubmittedEvent(
+                                      productId: widget.product.id,
                                       name: _nameController.text.trim(),
                                       batchNo: _batchNoController.text.trim(),
                                       quantity: _quantityController.text.trim(),
@@ -150,7 +167,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               SnackUtils.showError(
                                 context,
                                 ResponseConstants
-                                    .addProductValidationErrorMessage,
+                                    .updateProductValidationErrorMessage,
                               );
                             }
                           },
@@ -161,7 +178,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                       elevation: 4,
                     ),
-                    child: state is AddProductLoadingState
+                    child: state is UpdateProductLoadingState
                         ? const SizedBox(
                             height: 24,
                             width: 24,
@@ -171,7 +188,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                             ),
                           )
                         : const Text(
-                            "Add Product",
+                            "Update Product",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

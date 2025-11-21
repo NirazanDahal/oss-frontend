@@ -14,7 +14,7 @@ class DashboardCardsUtil {
       'name': 'Products',
       'icon': Icons.inventory_2_outlined,
       'color': AppColors.cardGreen,
-      // 'route': AppRoutes.productScreen,
+      'route': AppRoutes.getProductScreen,
     },
     {
       'name': 'Purchases',

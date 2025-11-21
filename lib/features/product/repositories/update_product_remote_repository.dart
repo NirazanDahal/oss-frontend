@@ -1,18 +1,19 @@
 import 'package:oss_frontend/core/constants/local_storage_constants.dart';
 import 'package:oss_frontend/features/auth/repositories/local/auth_local_repositoty.dart';
-import 'package:oss_frontend/features/product/models/res/add_product_response_model.dart';
-import 'package:oss_frontend/features/product/services/add_product_api_service.dart';
+import 'package:oss_frontend/features/product/models/res/update_product_response_model.dart';
+import 'package:oss_frontend/features/product/services/update_product_api_service.dart';
 
-class AddProductRemoteRepository {
-  final AddProductApiService _addProductApiService;
+class UpdateProductRemoteRepository {
+  final UpdateProductApiService _updateProductApiService;
   final AuthLocalRepositoty _authLocalRepositoty;
   
-  AddProductRemoteRepository(
-    this._addProductApiService,
+  UpdateProductRemoteRepository(
+    this._updateProductApiService,
     this._authLocalRepositoty,
   );
 
-  Future<AddProductResponseModel> addProduct(
+  Future<UpdateProductResponseModel> updateProduct(
+    String productId,
     String name,
     String batchNo,
     String quantity,
@@ -23,8 +24,9 @@ class AddProductRemoteRepository {
       final token = _authLocalRepositoty.getToken(
         LocalStorageConstants.tokenKey,
       );
-      final response = await _addProductApiService.addProduct(
+      final response = await _updateProductApiService.updateProduct(
         token,
+        productId,
         name,
         batchNo,
         quantity,

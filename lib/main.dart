@@ -12,6 +12,14 @@ import 'package:oss_frontend/features/costomer/blocs/update_customer/update_cust
 import 'package:oss_frontend/features/costomer/repositories/add_customer_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/repositories/get_customer_remote_repository.dart';
 import 'package:oss_frontend/features/costomer/repositories/update_customer_remote_repository.dart';
+import 'package:oss_frontend/features/product/blocs/add_product/add_product_bloc.dart';
+import 'package:oss_frontend/features/product/blocs/delete_product/delete_product_bloc.dart';
+import 'package:oss_frontend/features/product/blocs/get_product/get_product_bloc.dart';
+import 'package:oss_frontend/features/product/blocs/update_product/update_product_bloc.dart';
+import 'package:oss_frontend/features/product/repositories/add_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/delete_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/get_product_remote_repository.dart';
+import 'package:oss_frontend/features/product/repositories/update_product_remote_repository.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
 
@@ -52,6 +60,20 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               UpdateCustomerBloc(getIt<UpdateCustomerRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => AddProductBloc(getIt<AddProductRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (_) => GetProductBloc(getIt<GetProductRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              UpdateProductBloc(getIt<UpdateProductRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              DeleteProductBloc(getIt<DeleteProductRemoteRepository>()),
         ),
       ],
       child: MaterialApp(

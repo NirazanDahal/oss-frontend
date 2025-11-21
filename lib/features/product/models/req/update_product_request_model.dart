@@ -1,21 +1,25 @@
-part of 'add_product_bloc.dart';
-
-abstract class AddProductEvent {}
-
-class AddProductSubmittedEvent extends AddProductEvent {
+class UpdateProductRequestModel {
   final String name;
   final String batchNo;
   final String quantity;
   final String purchasePrice;
   final String sellingPrice;
 
-  AddProductSubmittedEvent({
+  UpdateProductRequestModel({
     required this.name,
     required this.batchNo,
     required this.quantity,
     required this.purchasePrice,
     required this.sellingPrice,
   });
-}
 
-class ResetAddProductStateEvent extends AddProductEvent {}
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'batchNo': batchNo,
+      'quantity': quantity,
+      'purchasePrice': purchasePrice,
+      'sellingPrice': sellingPrice,
+    };
+  }
+}

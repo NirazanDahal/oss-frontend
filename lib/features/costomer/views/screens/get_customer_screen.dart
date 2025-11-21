@@ -172,7 +172,7 @@ class _GetCustomerScreenState extends State<GetCustomerScreen> with RouteAware {
                         phone: c.phone,
                         address: c.address,
                         points: c.points,
-                        voidCallback: () {
+                        onTap: () {
                           Navigator.pushNamed(
                             context,
                             AppRoutes.updateCustomer,
