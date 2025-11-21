@@ -9,8 +9,11 @@ import 'package:oss_frontend/features/product/models/res/add_product_response_mo
 import 'package:oss_frontend/features/product/views/screens/add_product_screen.dart';
 import 'package:oss_frontend/features/product/views/screens/get_product_screen.dart';
 import 'package:oss_frontend/features/product/views/widgets/update_product_widget.dart';
+import 'package:oss_frontend/features/purchase/models/res/add_purchase_response_model.dart';
 import 'package:oss_frontend/features/purchase/views/screens/add_purchase_screen.dart';
 import 'package:oss_frontend/features/purchase/views/screens/get_purchase_screen.dart';
+import 'package:oss_frontend/features/purchase/views/screens/purchase_details_screen.dart';
+import 'package:oss_frontend/features/purchase/views/screens/update_purchase_screen.dart';
 import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
 import 'package:oss_frontend/features/splash_screen.dart';
 
@@ -28,6 +31,8 @@ class AppRoutes {
   static const String updateProductScreen = '/updateProduct';
   static const String addPurchaseScreen = '/addPurchase';
   static const String getPurchaseScreen = '/getPurchase';
+  static const String purchaseDetailsScreen = '/purchaseDetails';
+  static const String updatePurchaseScreen = '/updatePurchase';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -56,6 +61,16 @@ class AppRoutes {
         final product = settings.arguments as ProductData;
         return MaterialPageRoute(
           builder: (_) => UpdateProductWidget(product: product),
+        );
+      case purchaseDetailsScreen:
+        final purchase = settings.arguments as PurchaseData;
+        return MaterialPageRoute(
+          builder: (_) => PurchaseDetailsScreen(purchase: purchase),
+        );
+      case updatePurchaseScreen:
+        final purchase = settings.arguments as PurchaseData;
+        return MaterialPageRoute(
+          builder: (_) => UpdatePurchaseScreen(purchase: purchase),
         );
     }
     return null;

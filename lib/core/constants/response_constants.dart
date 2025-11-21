@@ -11,6 +11,9 @@ class ResponseConstants {
   static const String loginLoadingMessage =
       'User is being logged in, please wait...';
   static const String loginSuccessMessage = 'Login successful.';
+  //No Token Message
+  static const String noTokenMessage =
+      'Please logout and login again to continue...';
   //Profile
   static const String getProfileFailureMessage =
       'Cannot fetch profile at this time, try again later...';
@@ -77,4 +80,13 @@ class ResponseConstants {
       'Product is being deleted, please wait...';
   static const String deleteProductSuccessMessage =
       'Product deleted successfully';
+  //Purchase
+  static const String updatePurchaseFailureMessage =
+      'Cannot update purchase at this time, try again later...';
+  static const String updatePurchaseLoadingMessage =
+      'Purchase is being updated, please wait...';
+  static const String updatePurchaseSuccessMessage =
+      'Purchase updated successfully.';
+  static const String updatePurchaseValidationErrorMessage =
+      'At least one field needs to be updated';
 }

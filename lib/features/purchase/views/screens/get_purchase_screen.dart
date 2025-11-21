@@ -202,7 +202,11 @@ class _GetPurchaseScreenState extends State<GetPurchaseScreen> with RouteAware {
                         totalPrice: purchase.totalPrice,
                         productCount: purchase.products.length,
                         onTap: () {
-                          // TODO: Navigate to purchase details screen
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.purchaseDetailsScreen,
+                            arguments: purchase,
+                          );
                         },
                       );
                     },

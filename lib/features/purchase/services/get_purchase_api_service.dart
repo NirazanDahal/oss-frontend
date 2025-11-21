@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:oss_frontend/core/constants/api_constants.dart';
 import 'package:oss_frontend/core/utils/error_response_model.dart';
+import 'package:oss_frontend/core/utils/exception_utils.dart';
 import 'package:oss_frontend/features/purchase/models/res/get_purchase_response_model.dart';
 
 class GetPurchaseApiService {
@@ -24,28 +25,20 @@ class GetPurchaseApiService {
       ApiConstants.purchase,
     ).replace(queryParameters: queryParams);
 
-    try {
-      final response = await client.get(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
+    final response = await client.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
-      log('Get Purchases Status: ${response.statusCode}');
-      final decoded = jsonDecode(response.body) as Map<String, dynamic>;
+    final decoded = jsonDecode(response.body) as Map<String, dynamic>;
 
-      if (response.statusCode == 200) {
-        return GetPurchaseResponseModel.fromJson(decoded);
-      } else {
-        throw Exception(ErrorResponseModel.fromJson(decoded).error);
-      }
-    } catch (e) {
-      if (e.toString().contains('ErrorResponseModel')) {
-        rethrow;
-      }
-      throw Exception('Failed to fetch purchases: ${e.toString()}');
+    if (response.statusCode == 200) {
+      return GetPurchaseResponseModel.fromJson(decoded);
+    } else {
+      throw CreateException(ErrorResponseModel.fromJson(decoded));
     }
   }
 }

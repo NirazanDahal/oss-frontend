@@ -2,31 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
 import 'package:oss_frontend/core/utils/snack_utils.dart';
-import 'package:oss_frontend/features/purchase/blocs/add_purchase/add_purchase_bloc.dart';
-import 'package:oss_frontend/features/purchase/blocs/add_purchase/add_purchase_event.dart';
-import 'package:oss_frontend/features/purchase/blocs/add_purchase/add_purchase_state.dart';
+import 'package:oss_frontend/features/purchase/blocs/update_purchase/update_purchase_bloc.dart';
+import 'package:oss_frontend/features/purchase/blocs/update_purchase/update_purchase_event.dart';
+import 'package:oss_frontend/features/purchase/blocs/update_purchase/update_purchase_state.dart';
+import 'package:oss_frontend/features/purchase/models/req/update_purchase_request_model.dart';
 import 'package:oss_frontend/features/purchase/models/req/add_purchase_request_model.dart';
+import 'package:oss_frontend/features/purchase/models/res/add_purchase_response_model.dart';
 import 'package:oss_frontend/features/purchase/views/widgets/purchase_product_card.dart';
 
-class AddPurchaseScreen extends StatefulWidget {
-  const AddPurchaseScreen({super.key});
+class UpdatePurchaseScreen extends StatefulWidget {
+  final PurchaseData purchase;
+
+  const UpdatePurchaseScreen({super.key, required this.purchase});
 
   @override
-  State<AddPurchaseScreen> createState() => _AddPurchaseScreenState();
+  State<UpdatePurchaseScreen> createState() => _UpdatePurchaseScreenState();
 }
 
-class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
+class _UpdatePurchaseScreenState extends State<UpdatePurchaseScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _vendorNameController = TextEditingController();
-  final _addressController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
+  late final TextEditingController _vendorNameController;
+  late final TextEditingController _addressController;
+  late DateTime _selectedDate;
 
   final List<ProductInputData> _products = [];
 
   @override
   void initState() {
     super.initState();
-    _addProduct(); // Start with one product
+    // Pre-populate vendor details
+    _vendorNameController = TextEditingController(
+      text: widget.purchase.vendorName,
+    );
+    _addressController = TextEditingController(text: widget.purchase.address);
+    _selectedDate = DateTime.parse(widget.purchase.date);
+
+    // Pre-populate products
+    for (var product in widget.purchase.products) {
+      final productData = ProductInputData();
+      productData.nameController.text = product.productName;
+      productData.rateController.text = product.rate.toString();
+      productData.quantityController.text = product.quantity.toString();
+      _products.add(productData);
+    }
   }
 
   @override
@@ -66,7 +84,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
     return total;
   }
 
-  void _submitPurchase() {
+  void _submitUpdate() {
     if (_vendorNameController.text.trim().isEmpty) {
       SnackUtils.showError(context, 'Please enter vendor name');
       return;
@@ -100,14 +118,16 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
       );
     }).toList();
 
-    final request = AddPurchaseRequestModel(
+    final request = UpdatePurchaseRequestModel(
       vendorName: _vendorNameController.text.trim(),
       date: _selectedDate.toIso8601String().split('T')[0],
       address: _addressController.text.trim(),
       products: products,
     );
 
-    context.read<AddPurchaseBloc>().add(AddPurchaseSubmittedEvent(request));
+    context.read<UpdatePurchaseBloc>().add(
+      UpdatePurchaseSubmittedEvent(widget.purchase.id, request),
+    );
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -130,21 +150,23 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: const Text(
-          'Record Purchase',
+          'Update Purchase',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
-      body: BlocListener<AddPurchaseBloc, AddPurchaseState>(
+      body: BlocListener<UpdatePurchaseBloc, UpdatePurchaseState>(
         listener: (context, state) {
-          if (state is AddPurchaseSuccessState) {
+          if (state is UpdatePurchaseSuccessState) {
             SnackUtils.showSuccess(context, state.response.message);
-            context.read<AddPurchaseBloc>().add(ResetAddPurchaseStateEvent());
-            Navigator.pop(context);
+            context.read<UpdatePurchaseBloc>().add(
+              ResetUpdatePurchaseStateEvent(),
+            );
+            Navigator.pop(context, true); // Return true to indicate success
           }
-          if (state is AddPurchaseFailureState) {
+          if (state is UpdatePurchaseFailureState) {
             SnackUtils.showError(context, state.error.error);
           }
         },
@@ -319,14 +341,14 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                     ),
                   ],
                 ),
-                child: BlocBuilder<AddPurchaseBloc, AddPurchaseState>(
+                child: BlocBuilder<UpdatePurchaseBloc, UpdatePurchaseState>(
                   builder: (context, state) {
-                    final isLoading = state is AddPurchaseLoadingState;
+                    final isLoading = state is UpdatePurchaseLoadingState;
                     return SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: isLoading ? null : _submitPurchase,
+                        onPressed: isLoading ? null : _submitUpdate,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
@@ -344,7 +366,7 @@ class _AddPurchaseScreenState extends State<AddPurchaseScreen> {
                                 ),
                               )
                             : const Text(
-                                'Record Purchase',
+                                'Update Purchase',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

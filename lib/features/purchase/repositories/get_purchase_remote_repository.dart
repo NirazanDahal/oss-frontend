@@ -1,3 +1,6 @@
+import 'package:oss_frontend/core/constants/response_constants.dart';
+import 'package:oss_frontend/core/utils/error_response_model.dart';
+import 'package:oss_frontend/core/utils/exception_utils.dart';
 import 'package:oss_frontend/features/auth/repositories/local/auth_local_repositoty.dart';
 import 'package:oss_frontend/features/purchase/models/res/get_purchase_response_model.dart';
 import 'package:oss_frontend/features/purchase/services/get_purchase_api_service.dart';
@@ -18,7 +21,12 @@ class GetPurchaseRemoteRepository {
     try {
       final token = _authLocalRepositoty.getToken('token');
       if (token.isEmpty) {
-        throw Exception('Authentication token not found');
+        throw CreateException(
+          ErrorResponseModel(
+            success: false,
+            error: ResponseConstants.noTokenMessage,
+          ),
+        );
       }
 
       return await _getPurchaseApiService.getPurchases(

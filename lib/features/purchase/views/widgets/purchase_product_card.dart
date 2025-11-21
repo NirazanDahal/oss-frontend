@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oss_frontend/core/constants/app_colors.dart';
 
-class PurchaseProductCard extends StatelessWidget {
+class PurchaseProductCard extends StatefulWidget {
   final TextEditingController nameController;
   final TextEditingController rateController;
   final TextEditingController quantityController;
   final VoidCallback onRemove;
   final int index;
+  final VoidCallback? onValueChanged;
 
   const PurchaseProductCard({
     super.key,
@@ -16,12 +17,42 @@ class PurchaseProductCard extends StatelessWidget {
     required this.quantityController,
     required this.onRemove,
     required this.index,
+    this.onValueChanged,
   });
 
-  double get lineTotal {
-    final rate = double.tryParse(rateController.text) ?? 0;
-    final quantity = int.tryParse(quantityController.text) ?? 0;
-    return rate * quantity;
+  @override
+  State<PurchaseProductCard> createState() => _PurchaseProductCardState();
+}
+
+class _PurchaseProductCardState extends State<PurchaseProductCard> {
+  double _lineTotal = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to update line total in real-time
+    widget.rateController.addListener(_updateLineTotal);
+    widget.quantityController.addListener(_updateLineTotal);
+    _updateLineTotal();
+  }
+
+  @override
+  void dispose() {
+    widget.rateController.removeListener(_updateLineTotal);
+    widget.quantityController.removeListener(_updateLineTotal);
+    super.dispose();
+  }
+
+  void _updateLineTotal() {
+    final rate = double.tryParse(widget.rateController.text) ?? 0;
+    final quantity = int.tryParse(widget.quantityController.text) ?? 0;
+    setState(() {
+      _lineTotal = rate * quantity;
+    });
+    // Notify parent to update grand total (defer to avoid setState during build)
+    if (widget.onValueChanged != null) {
+      Future.microtask(() => widget.onValueChanged?.call());
+    }
   }
 
   @override
@@ -46,7 +77,7 @@ class PurchaseProductCard extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      '${index + 1}',
+                      '${widget.index + 1}',
                       style: TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -57,7 +88,7 @@ class PurchaseProductCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Product ${index + 1}',
+                    'Product ${widget.index + 1}',
                     style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
@@ -66,14 +97,14 @@ class PurchaseProductCard extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete_outline, color: Colors.red),
-                  onPressed: onRemove,
+                  onPressed: widget.onRemove,
                   tooltip: 'Remove Product',
                 ),
               ],
             ),
             const SizedBox(height: 16),
             TextField(
-              controller: nameController,
+              controller: widget.nameController,
               decoration: InputDecoration(
                 labelText: 'Product Name',
                 hintText: 'Enter product name',
@@ -88,7 +119,7 @@ class PurchaseProductCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: rateController,
+                    controller: widget.rateController,
                     decoration: InputDecoration(
                       labelText: 'Rate',
                       hintText: '0.00',
@@ -102,7 +133,7 @@ class PurchaseProductCard extends StatelessWidget {
                     ),
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(
-                        RegExp(r'^\d+\.?\d{0,2}'),
+                        RegExp(r'^\d*\.?\d{0,2}'),
                       ),
                     ],
                   ),
@@ -110,7 +141,7 @@ class PurchaseProductCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: TextField(
-                    controller: quantityController,
+                    controller: widget.quantityController,
                     decoration: InputDecoration(
                       labelText: 'Quantity',
                       hintText: '0',
@@ -136,18 +167,18 @@ class PurchaseProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Line Total:',
+                    'Line Total',
                     style: TextStyle(
                       color: AppColors.success,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Text(
-                    'Rs. ${lineTotal.toStringAsFixed(2)}',
+                    'Rs. ${_lineTotal.toStringAsFixed(2)}',
                     style: TextStyle(
                       color: AppColors.success,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
                     ),
                   ),
                 ],
