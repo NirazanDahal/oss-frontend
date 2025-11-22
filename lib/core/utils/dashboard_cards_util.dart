@@ -26,7 +26,7 @@ class DashboardCardsUtil {
       'name': 'Sales',
       'icon': Icons.trending_up,
       'color': AppColors.cardPurple,
-      // 'route': AppRoutes.salesScreen,
+      'route': AppRoutes.addSalesScreen,
     },
     {
       'name': 'Reports',

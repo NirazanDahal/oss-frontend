@@ -28,6 +28,8 @@ import 'package:oss_frontend/features/purchase/repositories/get_purchase_remote_
 import 'package:oss_frontend/features/purchase/repositories/update_purchase_remote_repository.dart';
 import 'package:oss_frontend/features/profile/blocs/profile/profile_bloc.dart';
 import 'package:oss_frontend/features/profile/repositories/profile_remote_repository.dart';
+import 'package:oss_frontend/features/sales/blocs/add_sale/add_sale_bloc.dart';
+import 'package:oss_frontend/features/sales/repositories/add_sale_remote_repository.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =
     RouteObserver<ModalRoute<void>>();
@@ -91,6 +93,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               UpdatePurchaseBloc(getIt<UpdatePurchaseRemoteRepository>()),
+        ),
+        BlocProvider(
+          create: (context) => AddSaleBloc(getIt<AddSaleRemoteRepository>()),
         ),
       ],
       child: MaterialApp(

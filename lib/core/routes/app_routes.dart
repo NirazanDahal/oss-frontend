@@ -15,6 +15,7 @@ import 'package:oss_frontend/features/purchase/views/screens/get_purchase_screen
 import 'package:oss_frontend/features/purchase/views/screens/purchase_details_screen.dart';
 import 'package:oss_frontend/features/purchase/views/screens/update_purchase_screen.dart';
 import 'package:oss_frontend/features/profile/views/screens/profile_screen.dart';
+import 'package:oss_frontend/features/sales/views/screens/add_sale_screen.dart';
 import 'package:oss_frontend/features/splash_screen.dart';
 
 class AppRoutes {
@@ -33,6 +34,7 @@ class AppRoutes {
   static const String getPurchaseScreen = '/getPurchase';
   static const String purchaseDetailsScreen = '/purchaseDetails';
   static const String updatePurchaseScreen = '/updatePurchase';
+  static const String addSalesScreen = '/addSales';
 
   static Map<String, WidgetBuilder> getRoutes() {
     return {
@@ -47,6 +49,7 @@ class AppRoutes {
       addProductScreen: (context) => const AddProductScreen(),
       addPurchaseScreen: (context) => const AddPurchaseScreen(),
       getPurchaseScreen: (context) => const GetPurchaseScreen(),
+      addSalesScreen: (context) => const AddSaleScreen(),
     };
   }
 
